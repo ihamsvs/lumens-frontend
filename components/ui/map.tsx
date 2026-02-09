@@ -7,12 +7,10 @@ import ReactMap, {
   Source,
   Layer,
   MapProvider,
-  useMap,
-  ViewState,
 } from "react-map-gl/maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { cn } from "@/lib/utils";
-import type { LineLayer } from "maplibre-gl";
+import type { LayerSpecification } from "maplibre-gl";
 
 // --- 1. COMPONENTE PRINCIPAL DEL MAPA ---
 interface MapProps extends React.ComponentProps<typeof ReactMap> {
@@ -70,7 +68,7 @@ export function MapRoute({
     },
   };
 
-  const layerStyle: LineLayer = {
+  const layerStyle: any = {
     id: "route-layer",
     type: "line",
     paint: {
