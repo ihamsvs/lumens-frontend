@@ -1,5 +1,5 @@
 "use client";
-
+import dynamic from "next/dynamic";
 import { useState } from "react";
 import { Header } from "@/components/header";
 import { HeroSection } from "@/components/hero-section";
@@ -13,7 +13,12 @@ import {
   Navigation,
   Ticket,
 } from "lucide-react";
-
+const DownloadButton = dynamic(() => import("@/components/download-button"), {
+  ssr: false,
+  loading: () => (
+    <div className="h-12 w-48 mx-auto mt-12 bg-white/10 rounded-full animate-pulse" />
+  ),
+});
 export default function LumensPage() {
   const [guide, setGuide] = useState<TravelGuide | null>(null);
   const [loading, setLoading] = useState(false);
@@ -194,7 +199,7 @@ export default function LumensPage() {
                 <DirectorCard key={idx} spot={spot} index={idx} />
               ))}
             </div>
-
+            <DownloadButton guide={guide} />
             <footer className="mt-20 border-t border-border/40 pt-8 text-center pb-8">
               <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground/50 hover:text-accent transition-colors cursor-default">
                 LUMENS TRAVEL AI © {new Date().getFullYear()}
