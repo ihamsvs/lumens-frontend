@@ -1,6 +1,6 @@
 "use client";
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Header } from "@/components/header";
 import { HeroSection } from "@/components/hero-section";
 import { DirectorCard } from "@/components/director-card";
@@ -48,6 +48,14 @@ export default function LumensPage() {
       setLoading(false);
     }
   };
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const cityFromUrl = params.get("city");
+
+    if (cityFromUrl) {
+      fetchGuide(cityFromUrl);
+    }
+  }, []);
 
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-accent/30">
