@@ -4,7 +4,7 @@ import { Header } from "@/components/header";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { TravelGuide } from "@/types/travel";
 import { Loader2, MapPin, Sparkles } from "lucide-react";
-
+import { Skeleton } from "@/components/ui/skeleton";
 // Interfaz para mapear la respuesta de Supabase
 interface SavedGuide {
   search_term: string;
@@ -59,8 +59,27 @@ export default function ExplorePage() {
         </div>
 
         {loading ? (
-          <div className="flex justify-center items-center py-20 min-h-[40vh]">
-            <Loader2 className="h-8 w-8 animate-spin text-accent" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-in fade-in duration-500">
+            {/* Generamos 6 tarjetas falsas para llenar la pantalla */}
+            {[...Array(6)].map((_, i) => (
+              <div
+                key={i}
+                className="overflow-hidden border border-border/50 rounded-xl bg-card/50 flex flex-col"
+              >
+                {/* Skeleton de la Imagen */}
+                <Skeleton className="h-56 w-full rounded-none bg-muted/50" />
+
+                {/* Skeleton del Texto (Prompt) */}
+                <div className="p-5 flex flex-col gap-3 bg-zinc-950/50">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Skeleton className="h-3.5 w-3.5 rounded-full bg-accent/20" />
+                    <Skeleton className="h-3 w-32 bg-foreground/10" />
+                  </div>
+                  <Skeleton className="h-4 w-full bg-foreground/20" />
+                  <Skeleton className="h-4 w-4/5 bg-foreground/20" />
+                </div>
+              </div>
+            ))}
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-in fade-in duration-1000">

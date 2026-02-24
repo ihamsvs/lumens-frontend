@@ -6,6 +6,8 @@ import { HeroSection } from "@/components/hero-section";
 import { DirectorCard } from "@/components/director-card";
 import { TravelGuide } from "@/types/travel";
 import { CinematicMap } from "@/components/cinematic-map";
+import { Skeleton } from "@/components/ui/skeleton";
+import { DirectorCardSkeleton } from "@/components/director-card-skeleton";
 import {
   Map as MapIcon,
   Calendar,
@@ -153,20 +155,49 @@ export default function LumensPage() {
       )}
 
       {loading && (
-        <div className="flex h-[80vh] flex-col items-center justify-center gap-4 animate-in fade-in zoom-in-95 duration-500">
-          <div className="relative">
-            <div className="h-16 w-16 rounded-full border-2 border-zinc-800"></div>
-            <div className="absolute top-0 left-0 h-16 w-16 rounded-full border-2 border-accent border-t-transparent animate-spin"></div>
-            <MapIcon className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-6 w-6 text-accent" />
-          </div>
-          <div className="text-center space-y-2">
-            <p className="font-mono text-sm uppercase tracking-[0.2em] text-foreground font-bold">
-              Preparando tu Guía
-            </p>
-            <p className="text-xs text-muted-foreground animate-pulse">
-              Buscando mejores rutas • Consultando clima...
-            </p>
-          </div>
+        <div className="w-full animate-in fade-in duration-500">
+          {/* 1. SKELETON DEL HERO SECTION */}
+          <section className="relative w-full overflow-hidden border-b border-border/40 min-h-[60vh] flex items-center bg-secondary/5">
+            <div className="absolute inset-0 z-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
+            <div className="relative z-10 mx-auto w-full max-w-screen-2xl px-8 md:px-20 lg:px-32 py-20">
+              <div className="flex flex-col gap-10 items-start w-full max-w-6xl">
+                <div className="flex flex-col gap-4 w-full">
+                  {/* Etiqueta de Destino */}
+                  <Skeleton className="h-8 w-48 rounded-full bg-accent/20" />
+                  {/* Título Gigante */}
+                  <Skeleton className="h-24 w-3/4 md:w-1/2 bg-foreground/10" />
+                  <Skeleton className="h-24 w-2/4 md:w-1/3 bg-foreground/10" />
+                </div>
+                {/* Badge de Clima */}
+                <Skeleton className="h-32 w-full max-w-4xl rounded-3xl bg-accent/10" />
+              </div>
+            </div>
+          </section>
+
+          {/* 2. SKELETON DEL MAPA */}
+          <section className="relative z-20 -mt-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mb-12">
+            <Skeleton className="w-full h-[500px] rounded-xl shadow-2xl bg-zinc-900 border border-border/40 flex items-center justify-center">
+              <div className="flex flex-col items-center gap-4 opacity-50">
+                <MapIcon className="h-10 w-10 text-accent animate-pulse" />
+                <p className="font-mono text-sm uppercase tracking-[0.2em] text-accent font-bold animate-pulse">
+                  Renderizando coordenadas...
+                </p>
+              </div>
+            </Skeleton>
+          </section>
+
+          {/* 3. SKELETON DE LAS TARJETAS DE LOCACIONES */}
+          <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+            <div className="flex flex-col gap-8">
+              {/* Caja de introducción */}
+              <Skeleton className="h-24 w-full rounded-lg bg-accent/5 border border-accent/10" />
+
+              {/* Tarjetas de directores falsas */}
+              <DirectorCardSkeleton />
+              <DirectorCardSkeleton />
+              <DirectorCardSkeleton />
+            </div>
+          </main>
         </div>
       )}
 
