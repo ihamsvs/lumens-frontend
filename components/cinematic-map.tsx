@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useRef } from "react";
 import { Spot } from "@/types/travel";
 import {
   Map,
@@ -11,7 +12,7 @@ import {
 } from "@/components/ui/map";
 import { Card } from "@/components/ui/card";
 import { X } from "lucide-react";
-import { Popup } from "react-map-gl/maplibre"; // Importamos Popup directamente de la librería base para funcionalidad
+import { Popup, MapRef } from "react-map-gl/maplibre";
 
 interface CinematicMapProps {
   spots: Spot[];
@@ -20,36 +21,59 @@ interface CinematicMapProps {
 export function CinematicMap({ spots }: CinematicMapProps) {
   const [selectedSpot, setSelectedSpot] = React.useState<Spot | null>(null);
 
-  // 1. Calcular el centro inicial (basado en el primer spot)
+  // 1. Referencia al mapa
+  const mapRef = useRef<MapRef>(null);
+
+  // 2. Vista inicial (Alejada, viendo la ciudad desde arriba)
   const initialViewState = {
     longitude: spots[0]?.coordinates.longitude || 0,
     latitude: spots[0]?.coordinates.latitude || 0,
-    zoom: 12,
+    zoom: 11, // Empezamos desde más arriba para que el vuelo sea más dramático
+    pitch: 0,
+    bearing: 0,
   };
 
-  // 2. Generar array de coordenadas para la línea de ruta [[lng, lat], [lng, lat]...]
+  // 3. Generar array de coordenadas para la línea de ruta
   const routeCoordinates = spots.map(
     (s) =>
       [s.coordinates.longitude, s.coordinates.latitude] as [number, number],
   );
 
+  // 4. LA MAGIA: Esta función se ejecuta SÓLO cuando el mapa cargó todo su diseño
+  const handleMapLoad = (e: any) => {
+    const map = e.target;
+
+    // Le damos un respiro de medio segundo para que el usuario procese la UI, y luego ¡ACCION!
+    setTimeout(() => {
+      map.flyTo({
+        center: [spots[0].coordinates.longitude, spots[0].coordinates.latitude],
+        zoom: 15.5, // Nos acercamos a nivel de calle
+        pitch: 65, // Inclinamos la cámara en 3D
+        bearing: 45, // Rotamos la vista
+        duration: 7000, // 7 segundos de vuelo suave y cinemático
+        essential: true,
+      });
+    }, 500);
+  };
+
   return (
-    <div className="relative w-full h-125 shadow-2xl">
-      {/* Etiqueta flotante */}
+    <div className="relative w-full h-[500px] shadow-2xl rounded-xl overflow-hidden">
       <div className="absolute top-4 left-4 z-10 bg-black/80 backdrop-blur-md px-4 py-2 rounded-lg border border-white/10 text-xs font-mono uppercase tracking-widest text-accent shadow-lg pointer-events-none">
         Ruta de Rodaje
       </div>
 
-      <Map initialViewState={initialViewState}>
-        {/* LÍNEA DE RUTA (Conecta los puntos) */}
+      <Map
+        ref={mapRef}
+        initialViewState={initialViewState}
+        onLoad={handleMapLoad} // Escuchamos el evento de carga
+      >
         <MapRoute
           coordinates={routeCoordinates}
-          color="#a855f7" // Un color morado/accent (ajusta a tu theme)
+          color="#a855f7"
           width={6}
           opacity={0.6}
         />
 
-        {/* MARCADORES */}
         {spots.map((spot, index) => (
           <MapMarker
             key={index}
@@ -58,19 +82,15 @@ export function CinematicMap({ spots }: CinematicMapProps) {
             onClick={() => setSelectedSpot(spot)}
           >
             <MarkerContent>
-              {/* Círculo numerado estilo "Metro de NY" */}
               <div className="size-6 rounded-full bg-accent border-2 border-zinc-950 shadow-[0_0_10px_rgba(168,85,247,0.5)] flex items-center justify-center text-zinc-950 text-xs font-bold relative z-10">
                 {index + 1}
               </div>
-              {/* Efecto de "Glow" debajo del marcador */}
               <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-1 bg-accent blur-sm opacity-70"></div>
             </MarkerContent>
-
             <MarkerTooltip>{spot.name}</MarkerTooltip>
           </MapMarker>
         ))}
 
-        {/* POPUP PERSONALIZADO (Mantenemos la lógica anterior para el detalle) */}
         {selectedSpot && (
           <Popup
             anchor="top"
@@ -99,8 +119,9 @@ export function CinematicMap({ spots }: CinematicMapProps) {
                     <img
                       src={selectedSpot.image_url}
                       className="w-full h-full object-cover"
+                      alt={selectedSpot.name}
                     />
-                    <div className="absolute inset-0 bg-linear-to-t from-zinc-950 via-transparent to-transparent opacity-80" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent opacity-80" />
                   </div>
                 )}
                 <div className="p-4 pt-2">

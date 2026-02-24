@@ -21,7 +21,7 @@ export function Header({ onSearch, isLoading }: HeaderProps) {
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 transition-all">
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* LOGO: Ahora usa Link para volver al inicio suavemente */}
-        <Link
+        <a
           href="/"
           className="flex items-center gap-2 cursor-pointer group select-none"
         >
@@ -31,7 +31,7 @@ export function Header({ onSearch, isLoading }: HeaderProps) {
           <span className="font-mono text-lg font-semibold tracking-tight text-foreground group-hover:text-accent transition-colors duration-300">
             LUMENS
           </span>
-        </Link>
+        </a>
 
         {/* LADO DERECHO: Botón Explorar + Buscador */}
         <div className="flex items-center gap-4 w-full max-w-md justify-end">
