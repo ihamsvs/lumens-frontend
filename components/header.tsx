@@ -43,7 +43,7 @@ export function Header({ onSearch, isLoading }: HeaderProps) {
 
           <Input
             type="search"
-            placeholder="Buscar destino (ej: Tokyo)..."
+            placeholder="Busca una ciudad o una vibra (ej: ciudad lluviosa cyberpunk...)"
             className="h-9 w-full bg-secondary/50 pl-9 text-sm placeholder:text-muted-foreground focus-visible:ring-accent transition-all focus:bg-background border-transparent focus:border-accent/50"
             value={query}
             onChange={(e) => setQuery(e.target.value)}

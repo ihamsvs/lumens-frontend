@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import QRCode from "qrcode";
-import { Download } from "lucide-react"; // Usamos Lucide que ya está en tu proyecto
+import { Download } from "lucide-react";
 import { TravelPdf } from "./travel-pdf";
 import { TravelGuide } from "@/types/travel";
 

@@ -30,7 +30,7 @@ export default function LumensPage() {
     setGuide(null);
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:3001";
       const res = await fetch(
         `${apiUrl}/gemini/cinematic-guide?city=${encodeURIComponent(city)}`,
       );
@@ -72,9 +72,9 @@ export default function LumensPage() {
               </h1>
 
               <p className="mx-auto max-w-2xl text-lg text-muted-foreground mb-10 leading-relaxed">
-                Encuentra los lugares más icónicos, conoce la mejor época para
-                viajar y descubre qué películas famosas sucedieron justo donde
-                estás parado.
+                Busca un destino exacto o describe la vibra cinematográfica que
+                tienes en mente. La IA encontrará el lugar perfecto, sus mejores
+                locaciones y la configuración de cámara ideal.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-4xl mx-auto text-left mt-16">
@@ -112,8 +112,8 @@ export default function LumensPage() {
                 <div className="space-y-8">
                   <Step
                     num="01"
-                    title="Elige tu Destino"
-                    desc="Escribe a dónde quieres ir en el buscador."
+                    title="Ingresa tu Destino o Vibra"
+                    desc="Escribe una ciudad (ej: París) o lo que imaginas (ej: castillo medieval con nieve)."
                   />
                   <Step
                     num="02"
