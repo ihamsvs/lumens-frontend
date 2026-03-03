@@ -243,20 +243,27 @@ export const TravelPdf = ({ guide, qrCodeUrl }: PdfProps) => {
 
             {/* TECH SPECS */}
             <View style={styles.techBox}>
-              <View style={styles.techItem}>
-                <Text style={styles.techLabel}>LIGHTING</Text>
-                <Text style={styles.techValue}>{spot.best_time_to_visit}</Text>
-              </View>
-              <View style={styles.techItem}>
-                <Text style={styles.techLabel}>ISO</Text>
-                <Text style={styles.techValue}>{spot.camera_settings.iso}</Text>
-              </View>
-              <View style={styles.techItem}>
-                <Text style={styles.techLabel}>LENS</Text>
-                <Text style={styles.techValue}>
-                  {spot.camera_settings.lens_recommendation}
-                </Text>
-              </View>
+              {typeof spot.camera_settings === "string" ? (
+                <View style={styles.techItem}>
+                  <Text style={styles.techLabel}>DIRECTOR's SETTINGS</Text>
+                  <Text style={styles.techValue}>{spot.camera_settings}</Text>
+                </View>
+              ) : (
+                <>
+                  <View style={styles.techItem}>
+                    <Text style={styles.techLabel}>CÁMARA PRO</Text>
+                    <Text style={styles.techValue}>
+                      {spot.camera_settings?.pro || "Automático"}
+                    </Text>
+                  </View>
+                  <View style={styles.techItem}>
+                    <Text style={styles.techLabel}>SMARTPHONE</Text>
+                    <Text style={styles.techValue}>
+                      {spot.camera_settings?.mobile || "Automático"}
+                    </Text>
+                  </View>
+                </>
+              )}
             </View>
           </View>
         ))}
