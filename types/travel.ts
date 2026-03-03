@@ -1,9 +1,6 @@
 export interface CameraSettings {
-  iso: string;
-  shutter_speed: string;
-  aperture: string;
-  focal_length: string;
-  lens_recommendation: string;
+  pro: string;
+  mobile: string;
 }
 export interface Spot {
   name: string;
@@ -19,7 +16,7 @@ export interface Spot {
   best_time_to_visit: string;
   visitor_tip: string;
   movie_connection: string;
-  camera_settings: CameraSettings;
+  camera_settings: string | CameraSettings;
 }
 
 export interface TravelGuide {
