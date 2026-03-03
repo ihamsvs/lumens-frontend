@@ -75,9 +75,9 @@ export default function LumensPage() {
               </div>
 
               <h1 className="text-balance text-5xl font-bold tracking-tight text-foreground sm:text-7xl mb-6">
-                Descubre el mundo a través de <br />
+                Tu Location Scout <br />
                 <span className="text-transparent bg-clip-text bg-linear-to-r from-white via-zinc-400 to-zinc-600">
-                  sus historias
+                  impulsado por IA
                 </span>
               </h1>
 
@@ -90,8 +90,8 @@ export default function LumensPage() {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-4xl mx-auto text-left mt-16">
                 <FeatureBox
                   icon={<Navigation className="h-5 w-5" />}
-                  title="Lugares Icónicos"
-                  desc="Guías curadas de los puntos imperdibles de cada ciudad."
+                  title="Locaciones Ocultas"
+                  desc="Descubre el 'B-side' de la ciudad. Callejones, arquitectura y joyas secretas."
                 />
                 <FeatureBox
                   icon={<Calendar className="h-5 w-5" />}
